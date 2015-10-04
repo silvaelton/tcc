@@ -1,0 +1,10 @@
+.container
+  .row{style: "margin-top: 100px;"}
+    .col-md-12{style: "text-align: center"}
+      %h1
+        %b Qual é seu nome?
+  .row{style: "margin-top: 80px;"}
+    .col-md-12{style: "text-align: center"}
+      = simple_form_for :data, url: welcome_path, method: :get do |f|
+        = f.input :name, label: false, placeholder: "Digite aqui o seu nome!"
+        = f.submit "Prosseguir!", name: nil, class: 'btn btn-success btn-lg'

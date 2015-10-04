@@ -1,0 +1,14 @@
+= @play
+.row
+  .col-md-2
+    %h1
+      %b Rodada
+      = @round
+  .col-md-2
+    - if @turn == 1
+      Você
+    - else
+      Computador
+.row
+  .col-md-12
+    = link_to "prosseguir", game_play_path, class: 'btn btn-success btn-lg'
