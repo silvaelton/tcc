@@ -1,14 +1,38 @@
-= @play
-.row
-  .col-md-2
-    %h1
-      %b Rodada
-      = @round
-  .col-md-2
-    - if @turn == 1
-      Você
-    - else
-      Computador
-.row
-  .col-md-12
-    = link_to "prosseguir", game_play_path, class: 'btn btn-success btn-lg'
+- if @turn == 1
+  :css
+    img:hover {
+        border:15px solid #79FF2C !important;
+    }
+.container
+  .row
+    .col-md-3
+      %h1
+        %b Rodada
+        = @round
+    .col-md-5
+    .col-md-4{style: 'text-align: right'}
+      %h1
+        %b= "#{(@turn == 1) ? 'Sua vez!' : 'Vez do Computador'}"
+  %hr/
+  %br/
+  .row
+    .col-md-12
+      .row
+        .col-md-6{style: 'text-align: left'}
+          = link_to image_tag("#{@image_url}#{@images[1][0]}#{@images[0][0]}.png", width: 220, class: "image-choice #{@images[1][0]}"), game_play_path(t: @images[1][0])
+        .col-md-6{style: 'text-align: right'}
+          = link_to image_tag("#{@image_url}#{@images[1][1]}#{@images[0][1]}.png", width: 220, class: "image-choice #{@images[1][1]}"), game_play_path(t: @images[1][1])
+      .row
+        .col-md-12{style: 'text-align: center'}
+          = link_to image_tag("#{@image_url}#{@images[1][2]}#{@images[0][2]}.png", width: 220, class: "image-choice #{@images[1][2]}"), game_play_path(t: @images[1][2])
+
+- if @turn == 0
+  :javascript
+    $(document).ready(function(){
+      setInterval(function(){
+        $(".#{@images[1][1]}").css('border', '15px solid #79FF2C');
+      }, 1000);
+      setInterval(function(){
+        $(location).attr('href', "/play?t=#{@images[1][1]}");
+      }, 2000);
+    });

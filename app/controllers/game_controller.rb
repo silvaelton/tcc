@@ -8,10 +8,15 @@ class GameController < ApplicationController
       session[:play] = session[:play] + 1
     end
 
+    @image_url = "http://tccgame.s3-website-sa-east-1.amazonaws.com/images/"
     @play = session[:play]
-    @round = (@play.to_i / 2)
-    @round = @round == 0 ? 1 : @round
-    @turn  = @play.to_i % 2
+
+    @round  = Round.turn!(@play, session[:group_id])
+    @turn   = Round.player_turn!(@play, session[:group_id])
+    @images = Round.images!(@play)
+
+    redirect_to game_finished_path unless Round.play!({index: @play, player: @turn, choice: params[:t], group_id: session[:group_id]})
+
   end
 
   def finish!
